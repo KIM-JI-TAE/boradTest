@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="loginProcess" resultType="WebMemberVO" parameterType="WebMemberVO">
+		select *
+		from webMember
+		where mem_id=#{mem_id} and mem_pass=#{mem_pass}
+	</select>
+
+	<!-- <select id="getBoardPageList" resultType="BoardVO" parameterType="BoardVO">
+		select
+			BOARD_SEQ,
+			TITLE,
+			CONTENTS,
+			REG_ID,
+			REG_DT
+		from board;
+	</select> -->
+	
+	<select id="getBoardPageList" resultType="BoardVO" parameterType="map">
+		select *
+		from
+			(select rownum rn, board.*
+			from board
+			order by board_seq)
+		where rn between (#{page}-1)*#{pageSize}+1 and #{page}*#{pageSize}
+	</select>
+
+	
+	<!-- <select id="getUserPageList" resultType="UserVO" parameterType="map"> 
+		select * from (select rownum rn, webMember.* from webMember order by mem_id) 
+		where rn between (#{page}-1)*#{pageSize}+1 and #{page}*#{pageSize} </select> -->
+	<!-- 전체 유저 건수 조회 -->
+	<!-- <select id="getUserTotalCnt" resultType="Integer"> SELECT COUNT(*) 
+		FROM webMember </select> -->
+
+
+
+	<!-- 상세조회 -->
+	<!-- <select id="getUser" resultType="UserVO" parameterType="String"> select 
+		* from webmMmber where mem_Id = #{mem_id} </select> -->
+	<!-- 기존 사용자 삭제 -->
+	<!-- <delete id="deleteUser" parameterType="UserVO" > delete * from webMember 
+		where mem_id = #mem_id# </delete> -->
+
+</mapper>
