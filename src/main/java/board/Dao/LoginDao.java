@@ -28,7 +28,7 @@ public class LoginDao implements LoginDaoInf{
 	}
 
 	@Override
-	public WebMemberVO userLogin(WebMemberVO wmv) throws SQLException {
+	public WebMemberVO userLogin(WebMemberVO wmv) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		WebMemberVO webMemberVo = sqlSession.selectOne("board.userLogin", wmv);
 		sqlSession.close();
